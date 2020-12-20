@@ -2,6 +2,7 @@ from paho.mqtt.client import Client
 from time import sleep
 from random import random, randint
 
+
 class Device:
     def __init__(self, dev_id, broker, battery_time, main_topic):
         """
