@@ -34,16 +34,24 @@ class Device:
             self.update_capacity()
             self.send()
             sleep(1)
+        self.stop()
+
+    def stop(self):
+        self.client.disconnect()
+        self.client.loop_stop()
 
     def send(self):
-        self.client.publish(f"{self.topic}/battery/{self.battery_percent()}")
-        self.client.publish(f"{self.topic}/capacity/{self.capacity}")
+        payload = {
+            "battery": self.battery_percent(),
+            "capacity": self.capacity
+        }
+        self.client.publish(f"{self.topic}", str(payload))
 
     def battery_percent(self):
-        return str(round(self.battery/self.battery_runtime, 2))
+        return str(round(self.battery / self.battery_runtime, 2))
 
     def update_capacity(self):
-        if random() > 0.5:
+        if self.capacity and random() > 0.5:
             self.capacity -= randint(1, 5)
 
     def update_battery(self):
