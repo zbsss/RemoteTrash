@@ -25,7 +25,6 @@ class Device:
     def start(self):
         self.client.connect(*self.broker)
         self.client.loop_start()  # runs in new thread
-        print(f"[{self.dev_id}] CONNECTED TO {self.broker}")
         self.run()
 
     def run(self):

@@ -1,8 +1,9 @@
 from device import Device
 from multiprocessing import Process
+from paho.mqtt.client import Client
 
 
-DEVICE_NUM = 2
+DEVICE_NUM = 10
 BROKER = ("test.mosquitto.org", 1883, 60)  # host, port, keepalive
 BATTERY_TIME = 60  # seconds
 MAIN_TOPIC = '2654645634673'
@@ -13,10 +14,27 @@ def create_device_and_loop(dev):
     device.start()
 
 
+def on_connect(client, userdata, flags, rc):
+    client.subscribe(MAIN_TOPIC + '/#')
+
+
+def on_message(client, userdata, msg):
+    print(f"[SIM] {msg.topic} {msg.payload}")
+
+
+def connect():
+    client = Client('simulation')
+    client.on_connect = on_connect
+    client.on_message = on_message
+    client.connect(*BROKER)
+    client.loop_forever()  # runs in same thread
+
+
 def simulate():
     for dev in range(DEVICE_NUM):
         proc = Process(target=create_device_and_loop, args=(str(dev),))
         proc.start()
+    connect()
 
 
 if __name__ == '__main__':
