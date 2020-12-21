@@ -2,7 +2,7 @@
 from configparser import ConfigParser
 
 
-def configDB(filename='config.ini', section='postgresql'):
+def configDB(filename='config-app.ini', section='postgresql'):
     # create a parser
     parser = ConfigParser()
     # read config file
@@ -19,7 +19,7 @@ def configDB(filename='config.ini', section='postgresql'):
 
     return db
 
-def configMQTT(filename='config.ini', section='mqtt'):
+def configMQTT(filename='config-app.ini', section='mqtt'):
     # create a parser
     parser = ConfigParser()
     # read config file
