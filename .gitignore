@@ -153,3 +153,4 @@ fabric.properties
 
 server_sync.sh
 *.zip
+*.ini
