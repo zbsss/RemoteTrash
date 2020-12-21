@@ -4,10 +4,7 @@ from paho.mqtt.client import Client
 from config import configDB, configMQTT
 from datetime import datetime
 
-# read database configuration
-
 paramsDB = configDB()
-# connect to the PostgreSQL database
 paramsMQTT = configMQTT()
 conn = psycopg2.connect(**paramsDB)
 
@@ -19,8 +16,6 @@ def on_message(client, userdata, message):
     payload = str(message.payload.decode("utf-8"))
     payload_dict = json.loads(payload)
     device_id = message.topic.split('/')[-1]
-
-    print(device_id)
     insert_record(conn, device_id, float(payload_dict['capacity']), float(payload_dict['battery']), datetime.now().isoformat(timespec='seconds'))
 
 def insert_record(conn, device_id, capacity, battery, time):
@@ -64,54 +59,8 @@ def create_tables():
          )
     """
     ]
-    # commands = (
-    #     """
-    #     CREATE TABLE records (
-    #         id INTEGER PRIMARY KEY,
-    #         device_id INTEGER,
-    #         capacity REAL,
-    #         battery REAL
-    #         time TIMESTAMP
-    #     )
-    #     CREATE TABLE vendors (
-    #         vendor_id SERIAL PRIMARY KEY,
-    #         vendor_name VARCHAR(255) NOT NULL
-    #     )
-    #     """,
-    #     """ CREATE TABLE parts (
-    #             part_id SERIAL PRIMARY KEY,
-    #             part_name VARCHAR(255) NOT NULL
-    #             )
-    #     """,
-    #     """
-    #     CREATE TABLE part_drawings (
-    #             part_id INTEGER PRIMARY KEY,
-    #             file_extension VARCHAR(5) NOT NULL,
-    #             drawing_data BYTEA NOT NULL,
-    #             FOREIGN KEY (part_id)
-    #             REFERENCES parts (part_id)
-    #             ON UPDATE CASCADE ON DELETE CASCADE
-    #     )
-    #     """,
-    #     """
-    #     CREATE TABLE vendor_parts (
-    #             vendor_id INTEGER NOT NULL,
-    #             part_id INTEGER NOT NULL,
-    #             PRIMARY KEY (vendor_id , part_id),
-    #             FOREIGN KEY (vendor_id)
-    #                 REFERENCES vendors (vendor_id)
-    #                 ON UPDATE CASCADE ON DELETE CASCADE,
-    #             FOREIGN KEY (part_id)
-    #                 REFERENCES parts (part_id)
-    #                 ON UPDATE CASCADE ON DELETE CASCADE
-    #     )
-    #     """)
-    conn = None
     try:
-        # read the connection parameters
-        params = config()
         # connect to the PostgreSQL server
-        conn = psycopg2.connect(**params)
         cur = conn.cursor()
         # create table one by one
         for command in commands:
@@ -129,12 +78,9 @@ def create_tables():
 
 if __name__ == '__main__':
     # create_tables()
-    # BROKER = ("34.70.234.204", 1883, 60)  # host, port, keepalive
-    BROKER = (paramsMQTT['host'], int(paramsMQTT['port']), int(paramsMQTT['keepalive']))  # host, port, keepalive
+    BROKER = (paramsMQTT['host'], int(paramsMQTT['port']), int(paramsMQTT['keepalive']))
     MAIN_TOPIC = paramsMQTT['main_topic']
     client = Client("srv")
-    #insert_record(1, 72.44, 21.01, '2020-12-21T12:01:22')
-
     client.connect(*BROKER)
     client.subscribe(MAIN_TOPIC + "/+")
     client.on_message = on_message
