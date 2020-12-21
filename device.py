@@ -1,7 +1,7 @@
 from paho.mqtt.client import Client
 from time import sleep
 from random import random, randint
-
+import json
 
 class Device:
     def __init__(self, dev_id, broker, battery_time, main_topic):
@@ -44,7 +44,7 @@ class Device:
             "battery": self.battery_percent(),
             "capacity": self.capacity
         }
-        self.client.publish(f"{self.topic}", str(payload))
+        self.client.publish(f"{self.topic}", json.dumps(payload))
 
     def battery_percent(self):
         return str(round(self.battery / self.battery_runtime, 2))

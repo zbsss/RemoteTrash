@@ -4,7 +4,7 @@ from paho.mqtt.client import Client
 
 
 DEVICE_NUM = 10
-BROKER = ("test.mosquitto.org", 1883, 60)  # host, port, keepalive
+BROKER = ("34.70.234.204", 1883, 60)  # host, port, keepalive
 BATTERY_TIME = 60  # seconds
 MAIN_TOPIC = '2654645634673'
 
