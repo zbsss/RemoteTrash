@@ -6,11 +6,12 @@ from paho.mqtt.client import Client
 DEVICE_NUM = 10
 BROKER = ("34.70.234.204", 1883, 60)  # host, port, keepalive
 BATTERY_TIME = 60  # seconds
+MESSAGE_TIME = 30  # seconds
 MAIN_TOPIC = '2654645634673'
 
 
 def create_device_and_loop(dev):
-    device = Device(dev, BROKER, BATTERY_TIME, MAIN_TOPIC)
+    device = Device(dev, BROKER, BATTERY_TIME, MESSAGE_TIME, MAIN_TOPIC)
     device.start()
 
 
