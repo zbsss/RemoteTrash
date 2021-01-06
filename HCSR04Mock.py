@@ -1,5 +1,5 @@
-import time
-import random
+from time import sleep
+from random import uniform
 
 class HCSR04:
     """
@@ -31,12 +31,12 @@ class HCSR04:
         Send the pulse to trigger and listen on echo pin.
         We use the method `machine.time_pulse_us()` to get the microseconds until the echo is received.
         """
-        time.sleep(0.000015)
+        sleep(0.000015)
         pulse_stop = self.last_result - self.filling_part_time
         if pulse_stop <= 0:
             pulse_stop = 0
 
-        pulse_time = random.uniform(pulse_stop, self.last_result)
+        pulse_time = uniform(pulse_stop, self.last_result)
         self.last_result = pulse_time
         
         return pulse_time
