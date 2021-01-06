@@ -3,7 +3,7 @@
 Digital twin of our device should contain:</br>
 - microcontroller ESP32 (eg. FireBeetle ESP32)
 - HCSR04 ultrasonic sensor
-- lithium battery 3.7V
+- lithium battery 3.7V (eg. li-ion 18650 - capacity: 2600mAh)
 
 The device will be programmed using micro python.
 
@@ -28,6 +28,3 @@ Working current: | 15mA
 <br>
 
 _TODO: trzeba jeszcze dodać realistycze spadki energii baterii - jak dużo prądu zużywa ESP32 z tym sensorem w czasie lightsleep i w czasie działania i wysyłania wiadomości. I trzeba jakoś pobierać info o aktualnym stanie rozładowania baterii (w tym rzeczywistym urządzeniu)._
-
-
-https://datasheet4u.com/datasheet-pdf/ETC/HC-SR04/pdf.php?id=1380136
