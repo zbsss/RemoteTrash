@@ -28,6 +28,7 @@ def connect():
     client.on_message = on_message
     client.connect(*BROKER)
     client.loop_forever()  # runs in same thread
+    pass
 
 
 def simulate():
