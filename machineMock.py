@@ -4,5 +4,20 @@ from time import sleep
 def deepsleep(sleep_time_ms):
     sleep(sleep_time_ms/1000)
 
-def analogRead():
-    return 3.7
+class Pin:
+    def __init__(self, pin):
+        self.pin = pin
+
+
+class ADC:
+    ATTN_11DB = 3.3
+
+    def __init__(self, pin):
+        self.pin = pin
+        self.max_voltage = 1.2
+
+    def read(self):
+        return 3.2
+    
+    def atten(self, arg):
+        self.max_voltage = arg

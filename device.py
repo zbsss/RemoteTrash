@@ -32,8 +32,9 @@ class Device:
         self.capacity = 100 
         self.free_space = self.capacity
 
-        self.battery = battery_time
         self.battery_runtime = battery_time
+        self.battery = battery_time
+        self.get_battery()
 
     def start(self):
         self.client.connect(*self.broker)
@@ -42,9 +43,9 @@ class Device:
 
     def run(self):
         while self.battery:
-            self.update_battery()
             self.update_free_space()
             print(self.free_space)
+            self.get_battery()
             self.send()
             machine.deepsleep(self.send_message_time)
         self.stop()
@@ -69,7 +70,10 @@ class Device:
     def update_free_space(self):
         self.free_space = self.sensor.distance_cm()
 
-    def update_battery(self):
-        nVoltageRaw = analogRead(A0);
-        fVoltage = nVoltageRaw * 0.00486;
+    def get_battery(self):
+        pot = machine.ADC(machine.Pin(34))
+        pot.atten(machine.ADC.ATTN_11DB)
+
+        nVoltageRaw = pot.read()
+        fVoltage = nVoltageRaw * 0.00486
         self.battery = fVoltage
