@@ -5,6 +5,8 @@ from paho.mqtt.client import Client
 
 DEVICE_NUM = 10
 BROKER = ("34.70.234.204", 1883, 60)  # host, port, keepalive
+REAL_BATTERY_TIME = 25 # in day x2, because battery time is updated when measurement is being done
+REAL_MESSAGE_TIME = 3600*24 # 24h in s
 BATTERY_TIME = 60  # seconds
 MESSAGE_TIME = 30  # seconds
 MAIN_TOPIC = '2654645634673'
