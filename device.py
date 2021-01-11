@@ -46,7 +46,7 @@ class Device:
             self.update_free_space()
             print(self.free_space)
             self.send()
-            machine.lightsleep(self.send_message_time)
+            machine.deepsleep(self.send_message_time)
         self.stop()
 
     def stop(self):
