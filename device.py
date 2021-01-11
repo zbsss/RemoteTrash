@@ -62,10 +62,14 @@ class Device:
         self.client.publish(f"{self.topic}", json.dumps(payload))
 
     def battery_percent(self):
-        return str(round(self.battery / self.battery_runtime, 2))
+        #TODO calc from voltage to percent
+
+        return 27.02*self.battery
 
     def update_free_space(self):
         self.free_space = self.sensor.distance_cm()
 
     def update_battery(self):
-        self.battery -= 1
+        nVoltageRaw = analogRead(A0);
+        fVoltage = nVoltageRaw * 0.00486;
+        self.battery = fVoltage
