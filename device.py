@@ -32,8 +32,9 @@ class Device:
         self.capacity = 100 
         self.free_space = self.capacity
 
-        self.battery = battery_time
         self.battery_runtime = battery_time
+        self.battery = battery_time
+        self.get_battery()
 
     def start(self):
         self.client.connect(*self.broker)
@@ -42,11 +43,11 @@ class Device:
 
     def run(self):
         while self.battery:
-            self.update_battery()
             self.update_free_space()
             print(self.free_space)
+            self.get_battery()
             self.send()
-            machine.lightsleep(self.send_message_time)
+            machine.deepsleep(self.send_message_time)
         self.stop()
 
     def stop(self):
@@ -62,10 +63,17 @@ class Device:
         self.client.publish(f"{self.topic}", json.dumps(payload))
 
     def battery_percent(self):
-        return str(round(self.battery / self.battery_runtime, 2))
+        #TODO calc from voltage to percent
+
+        return 27.02*self.battery
 
     def update_free_space(self):
         self.free_space = self.sensor.distance_cm()
 
-    def update_battery(self):
-        self.battery -= 1
+    def get_battery(self):
+        pot = machine.ADC(machine.Pin(34))
+        pot.atten(machine.ADC.ATTN_11DB)
+
+        nVoltageRaw = pot.read()
+        fVoltage = nVoltageRaw * 0.00486
+        self.battery = fVoltage
