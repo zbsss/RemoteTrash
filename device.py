@@ -12,7 +12,7 @@ class Device:
         """
         :param dev_id: id of the device
         :param broker: address of the broker
-        :param battery_time: number of seconds that the battery can run
+        :param battery_time: number of informations that can be sent during battery life
         :param message_time: a message will be send every certain period of time (in seconds)
         :param main_topic: main topic of the broker
         """
@@ -34,7 +34,7 @@ class Device:
 
         self.battery_runtime = battery_time
         self.battery = battery_time
-        self.get_battery()
+
 
     def start(self):
         self.client.connect(*self.broker)
@@ -62,18 +62,25 @@ class Device:
         }
         self.client.publish(f"{self.topic}", json.dumps(payload))
 
-    def battery_percent(self):
-        #TODO calc from voltage to percent
-
-        return 27.02*self.battery
 
     def update_free_space(self):
         self.free_space = self.sensor.distance_cm()
 
-    def get_battery(self):
+    def battery_percent(self):
+        return self.battery / self.battery_runtime *100
+
+
+    def get_battery(self): 
+        # mocked battery update
+        self.battery -= 1
+
+        # functions to use with real device
         pot = machine.ADC(machine.Pin(34))
         pot.atten(machine.ADC.ATTN_11DB)
 
         nVoltageRaw = pot.read()
-        fVoltage = nVoltageRaw * 0.00486
-        self.battery = fVoltage
+        sVoltage = nVoltageRaw * (17021.277) / 7021.277
+        
+
+        
+    
