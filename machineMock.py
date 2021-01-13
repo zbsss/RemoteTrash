@@ -4,5 +4,7 @@ from time import sleep
 def deepsleep(sleep_time_ms):
     sleep(sleep_time_ms/1000)
 
-def analogRead():
+def analogRead(pin):
     return 3.7
+
+A0 = 0

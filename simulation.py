@@ -3,17 +3,17 @@ from multiprocessing import Process
 from paho.mqtt.client import Client
 
 
-DEVICE_NUM = 10
+DEVICE_NUM = 4
 BROKER = ("34.70.234.204", 1883, 60)  # host, port, keepalive
 REAL_BATTERY_TIME = 25 # in day x2, because battery time is updated when measurement is being done
 REAL_MESSAGE_TIME = 3600*24 # 24h in s
 BATTERY_TIME = 60  # seconds
-MESSAGE_TIME = 30  # seconds
-MAIN_TOPIC = '2654645634673'
+MESSAGE_TIME = 4  # seconds
+MAIN_TOPIC = '/devices/'
 
 
-def create_device_and_loop(dev):
-    device = Device(dev, BROKER, BATTERY_TIME, MESSAGE_TIME, MAIN_TOPIC)
+def create_device_and_loop(dev, num):
+    device = Device(dev, BATTERY_TIME, MESSAGE_TIME, num)
     device.start()
 
 
@@ -34,8 +34,8 @@ def connect():
 
 
 def simulate():
-    for dev in range(DEVICE_NUM):
-        proc = Process(target=create_device_and_loop, args=(str(dev),))
+    for dev in range(1, DEVICE_NUM):
+        proc = Process(target=create_device_and_loop, args=("smart-bin-{}".format(dev), dev))
         proc.start()
     connect()
 
