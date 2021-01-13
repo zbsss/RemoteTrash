@@ -6,9 +6,14 @@ import json
 # from HCSR04 import HC-SR04
 import machineMock as machine
 from HCSR04Mock import HCSR04
+import mqtt_functions as mqttHelper
+from mqtt_functions import *
+import time
+import datetime
+
 
 class Device:
-    def __init__(self, dev_id, broker, battery_time, message_time, main_topic):
+    def __init__(self, dev, battery_time, message_time, num):
         """
         :param dev_id: id of the device
         :param broker: address of the broker
@@ -16,12 +21,10 @@ class Device:
         :param message_time: a message will be send every certain period of time (in seconds)
         :param main_topic: main topic of the broker
         """
-        self.dev_id = dev_id
-        self.topic = f"{main_topic}/{dev_id}"
-
-        self.client = Client(dev_id)
-        self.broker = broker
-
+        self.conf = mqttHelper.CONFIGURATION
+        self.conf['device_id'] = dev
+        self.conf['private_key_file'] = self.conf['private_key_file'] + str(num) + ".pem"
+        
         # seconds to milliseconds 1 second = 1000 ms
         self.send_message_time = message_time * 1000
         
@@ -33,11 +36,29 @@ class Device:
         self.free_space = self.capacity
 
         self.battery_runtime = battery_time
+        self.mqtt_init()
         self.battery = battery_time
 
 
+    def mqtt_init(self):
+        conf = self.conf
+        self.topic = "/devices/{}/{}".format(conf['device_id'], "events")
+        client = mqttHelper.get_client(
+            conf['project_id'],
+            conf['cloud_region'],
+            conf['registry_id'],
+            conf['device_id'],
+            conf['private_key_file'],
+            conf['algorithm'],
+            conf['ca_certs'],
+            conf['mqtt_bridge_hostname'],
+            conf['mqtt_bridge_port']
+        )
+
+
+        print("connected")
+        self.client = client
     def start(self):
-        self.client.connect(*self.broker)
         self.client.loop_start()  # runs in new thread
         self.run()
 
@@ -55,12 +76,18 @@ class Device:
         self.client.loop_stop()
 
     def send(self):
+ 
         payload = {
-            "battery": self.battery_percent(),
-            "capacity": self.capacity,
-            "free space": self.free_space
+            "name" : self.conf['device_id'],
+            "fulfillment":  self.capacity,
+            "battery" : self.battery_percent(),
+            "timestamp" : datetime.datetime.now().isoformat()
         }
-        self.client.publish(f"{self.topic}", json.dumps(payload))
+        print("sending {}".format(self.conf['device_id']))
+        print(json.dumps(payload))
+        print(self.topic)
+        print("")
+        self.client.publish(self.topic, json.dumps(payload), qos=1)
 
 
     def update_free_space(self):
@@ -80,7 +107,4 @@ class Device:
 
         nVoltageRaw = pot.read()
         sVoltage = nVoltageRaw * (17021.277) / 7021.277
-        
-
-        
     
