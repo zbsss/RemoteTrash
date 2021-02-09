@@ -79,8 +79,8 @@ class Device:
  
         payload = {
             "name" : self.conf['device_id'],
-            "fulfillment":  self.capacity,
-            "battery" : self.battery_percent(),
+            "fulfillment":  int(self.capacity),
+            "battery" : int(self.battery_percent()),
             "timestamp" : datetime.datetime.now().isoformat()
         }
         print("sending {}".format(self.conf['device_id']))

@@ -7,8 +7,13 @@ DEVICE_NUM = 4
 BROKER = ("34.70.234.204", 1883, 60)  # host, port, keepalive
 REAL_BATTERY_TIME = 38 # in days x2, because battery time is updated when measurement is being done
 REAL_MESSAGE_TIME = 3600*24 # 24h in s
+<<<<<<< HEAD
 BATTERY_TIME = 38  # messages can be send during battery life
 MESSAGE_TIME = 4  # seconds
+=======
+BATTERY_TIME = 38  # seconds
+MESSAGE_TIME = 3  # seconds
+>>>>>>> a4a1216377f854c3acbad021c0f434e042715a21
 MAIN_TOPIC = '/devices/'
 
 

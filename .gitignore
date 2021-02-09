@@ -155,3 +155,4 @@ server_sync.sh
 *.zip
 *.ini
 *.pem
+GCLOUDKEY.json
