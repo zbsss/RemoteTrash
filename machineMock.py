@@ -24,3 +24,4 @@ class ADC:
     
     def atten(self, arg):
         self.max_voltage = arg
+        
