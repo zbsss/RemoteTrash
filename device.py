@@ -13,16 +13,17 @@ import datetime
 
 
 class Device:
-    def __init__(self, config_file, dev):
+    def __init__(self, config_file):
         """
         :param config_file: name of json file with configuration
         """
 
-        # read device config
-        with open(config_file) as f:
-            self.conf = json.load(f)
+        # # read device config
+        # with open(config_file) as f:
+        #     self.conf = json.load(f)
+        self.conf = config_file
 
-        self.conf['private_key_file'] = "rsa_private_{}.pem".format(dev)
+        self.conf['private_key_file'] = "rsa_private_{}.pem".format(self.conf['device_id'])
         
         # seconds to milliseconds 1 second = 1000 ms
         self.send_message_time = self.conf['message_time'] * 1000
@@ -107,3 +108,9 @@ class Device:
         voltageRaw = pot.read()
         sVoltage = voltageRaw * (17021.277) / 7021.277
     
+
+if __name__ == '__main__':
+    # This only works when a real device is activated not when simulation is run
+    with open('config.json') as f:
+        config = json.load(f)
+    Device(config).start()
