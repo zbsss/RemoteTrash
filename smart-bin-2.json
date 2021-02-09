@@ -1,1 +1,0 @@
-{"project_id": "tirprojekt", "cloud_region": "europe-west1", "registry_id": "smartbins", "private_key_file": "rsa_private_", "algorithm": "RS256", "ca_certs": "roots.pem", "mqtt_bridge_hostname": "mqtt.googleapis.com", "mqtt_bridge_port": 8883, "device_id": "smart-bin-2", "num": 2, "message_time": 3, "battery_time": 38, "bin_capacity": 100}
