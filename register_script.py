@@ -85,12 +85,12 @@ def get_dev(devid):
     )
     device = client.get_device(request={"name": device_path, "field_mask": field_mask})
 
-    print("Id : {}".format(device.id))
-    print("Name : {}".format(device.name))
-    print("Metadata: {}".format(device.metadata))
-    print("\tdata: {}".format(device.config.binary_data))
-    print("\tversion: {}".format(device.config.version))
-    print("\tcloudUpdateTime: {}".format(device.config.cloud_update_time))
+    # print("Id : {}".format(device.id))
+    # print("Name : {}".format(device.name))
+    # print("Metadata: {}".format(device.metadata))
+    # print("\tdata: {}".format(device.config.binary_data))
+    # print("\tversion: {}".format(device.config.version))
+    # print("\tcloudUpdateTime: {}".format(device.config.cloud_update_time))
 
     return device
 
