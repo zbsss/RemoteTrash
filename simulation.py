@@ -25,8 +25,8 @@ MAIN_TOPIC = '/devices/'
 
 
 def create_device_and_loop(dev, num):
-    config_file = create_config(dev, num, BATTERY_TIME, MESSAGE_TIME, BIN_CAPACITY)
-    device = Device(config_file, dev)
+    create_config(dev, num, BATTERY_TIME, MESSAGE_TIME, BIN_CAPACITY)
+    device = Device(CONFIGURATION)
     device.start()
 
 
@@ -37,11 +37,7 @@ def create_config(dev,num,BATTERY_TIME, MESSAGE_TIME, BIN_CAPACITY):
     CONFIGURATION["battery_time"] = BATTERY_TIME
     CONFIGURATION["bin_capacity"] = BIN_CAPACITY
 
-    name = dev+".json"
-    with open(name, "w") as f:
-        json.dump(CONFIGURATION, f)
-    
-    return name
+
 
 
 def on_connect(client, userdata, flags, rc):
