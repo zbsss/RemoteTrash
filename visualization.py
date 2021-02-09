@@ -71,16 +71,14 @@ def update_figure(data):
 
 
 def update_loop():
-    while running:
+    while True:
         newest = get_newest_data()
         update_figure(newest)
         plt.draw()
         sleep(10)
 
 
-running = True
-update_thread = Thread(target=update_loop)
+update_thread = Thread(target=update_loop, daemon=True)
 update_thread.start()
 plt.show()
-running = False
 print("FINISHED!!")

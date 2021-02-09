@@ -17,10 +17,6 @@ class Device:
         """
         :param config_file: name of json file with configuration
         """
-
-        # # read device config
-        # with open(config_file) as f:
-        #     self.conf = json.load(f)
         self.conf = config_file
 
         self.conf['private_key_file'] = "rsa_private_{}.pem".format(self.conf['device_id'])

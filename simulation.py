@@ -38,8 +38,6 @@ def create_config(dev,num,BATTERY_TIME, MESSAGE_TIME, BIN_CAPACITY):
     CONFIGURATION["bin_capacity"] = BIN_CAPACITY
 
 
-
-
 def on_connect(client, userdata, flags, rc):
     client.subscribe(MAIN_TOPIC + '/#')
 
