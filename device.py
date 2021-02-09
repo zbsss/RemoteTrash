@@ -17,7 +17,7 @@ class Device:
         """
         :param dev_id: id of the device
         :param broker: address of the broker
-        :param battery_time: number of informations that can be sent during battery life
+        :param battery_time: number of messages that can be send during battery life
         :param message_time: a message will be send every certain period of time (in seconds)
         :param main_topic: main topic of the broker
         """
@@ -105,6 +105,6 @@ class Device:
         pot = machine.ADC(machine.Pin(34))
         pot.atten(machine.ADC.ATTN_11DB)
 
-        nVoltageRaw = pot.read()
-        sVoltage = nVoltageRaw * (17021.277) / 7021.277
+        voltageRaw = pot.read()
+        sVoltage = voltageRaw * (17021.277) / 7021.277
     

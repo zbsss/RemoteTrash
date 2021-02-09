@@ -1,6 +1,19 @@
 # Remote Trash
 
-Digital twin of our device should contain:</br>
+### A project prepared for IoT laboratories at AGH University of Science and Technology.
+
+
+The subject of the project was to create a system that implements smart monitoring.
+We chose to design system that would monitor the level of filling the trash bins in the city.  
+
+Based on articles ([first](https://www.ijert.org/research/iot-based-smart-garbage-and-waste-monitoring-system-using-mqtt-protocol-IJERTCONV6IS13133.pdf), [second](https://www.researchgate.net/publication/282738798_Smart_Waste_Collection_System_Based_on_Location_Intelligence)) we have designed what should contain the device, which will measure level of garbage in a bin. The digital twin of this device and software for it was prepared by us. 
+To run simulations we have made mocked libraries and functions, which could be replaced by real ones in actual device.  
+
+Our device sends information about its battery condition and trash level to Google Cloud cyclicaly. It uses MQTT to connect with cloud.  
+   
+   #
+
+Our digital device is a twin of actual device, which should contain :</br>
 - microcontroller ESP32 (eg. FireBeetle ESP32)
 - HCSR04 ultrasonic sensor
 - two lithium batteries 3.7V each (eg. li-ion 18650 - capacity: 2600mAh each)
