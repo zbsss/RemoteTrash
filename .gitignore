@@ -154,5 +154,5 @@ fabric.properties
 server_sync.sh
 *.zip
 *.ini
-*.pem
+# *.pem
 GCLOUDKEY.json
