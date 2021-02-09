@@ -60,7 +60,7 @@ def update_figure(data):
     ax2.clear()
     _, _, bars = ax2.hist(data['fulfillment'])
     for bar in bars:
-        if bar.get_x() >= 25:
+        if bar.get_x() <= 25:
             bar.set_facecolor('red')
     ax2.set_title("Fulfillment distribution")
     ax2.set_xlabel("Fulfillment percentage (%)")
