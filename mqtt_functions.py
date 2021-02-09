@@ -10,19 +10,17 @@ import time
 import jwt
 import paho.mqtt.client as mqtt
 
-CONFIGURATION = {
-    "project_id" : "tirprojekt",
-    "cloud_region" : "europe-west1",
-    "registry_id" : "smartbins",
-    "device_id" : "smart-bin-1",
-    "private_key_file" : "rsa_private",
-    "algorithm" : "RS256",
-    "ca_certs" : "roots.pem",
-    "mqtt_bridge_hostname" : "mqtt.googleapis.com",
-    "mqtt_bridge_port" : 8883,
-
-
-}
+# CONFIGURATION = {
+#     "project_id" : "tirprojekt",
+#     "cloud_region" : "europe-west1",
+#     "registry_id" : "smartbins",
+#     "device_id" : "smart-bin-1",
+#     "private_key_file" : "rsa_private",
+#     "algorithm" : "RS256",
+#     "ca_certs" : "roots.pem",
+#     "mqtt_bridge_hostname" : "mqtt.googleapis.com",
+#     "mqtt_bridge_port" : 8883,
+# }
 
 #!/usr/bin/env python
 

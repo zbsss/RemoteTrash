@@ -13,31 +13,30 @@ import datetime
 
 
 class Device:
-    def __init__(self, dev, battery_time, message_time, num):
+    def __init__(self, config_file):
         """
-        :param dev_id: id of the device
-        :param broker: address of the broker
-        :param battery_time: number of messages that can be send during battery life
-        :param message_time: a message will be send every certain period of time (in seconds)
-        :param main_topic: main topic of the broker
+        :param config_file: name of json file with configuration
         """
-        self.conf = mqttHelper.CONFIGURATION
-        self.conf['device_id'] = dev
-        self.conf['private_key_file'] = self.conf['private_key_file'] + str(num) + ".pem"
+
+        # read device config
+        with open(config_file) as f:
+            self.conf = json.load(f)
+
+        self.conf['private_key_file'] = self.conf['private_key_file'] + str(self.conf['num']) + ".pem"
         
         # seconds to milliseconds 1 second = 1000 ms
-        self.send_message_time = message_time * 1000
+        self.send_message_time = self.conf['message_time'] * 1000
         
         # the ustrasonic sensor
         self.sensor = HCSR04(trigger_pin = 13, echo_pin = 12, echo_timeout_us = 1000000)
 
         # capacity of the bin (in centimetres)
-        self.capacity = 100 
+        self.capacity = self.conf['bin_capacity'] 
         self.free_space = self.capacity
 
-        self.battery_runtime = battery_time
+        self.battery_runtime = self.conf['battery_time']
         self.mqtt_init()
-        self.battery = battery_time
+        self.battery = self.battery_runtime
 
 
     def mqtt_init(self):

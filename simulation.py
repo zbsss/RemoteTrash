@@ -1,7 +1,18 @@
 from device import Device
 from multiprocessing import Process
 from paho.mqtt.client import Client
+import json
 
+CONFIGURATION = {
+    "project_id" : "tirprojekt",
+    "cloud_region" : "europe-west1",
+    "registry_id" : "smartbins",
+    "private_key_file" : "rsa_private",
+    "algorithm" : "RS256",
+    "ca_certs" : "roots.pem",
+    "mqtt_bridge_hostname" : "mqtt.googleapis.com",
+    "mqtt_bridge_port" : 8883,
+}
 
 DEVICE_NUM = 4
 BROKER = ("34.70.234.204", 1883, 60)  # host, port, keepalive
@@ -9,14 +20,28 @@ REAL_BATTERY_TIME = 38 # in days x2, because battery time is updated when measur
 REAL_MESSAGE_TIME = 3600*24 # 24h in s
 BATTERY_TIME = 38  # seconds
 MESSAGE_TIME = 3  # seconds
+BIN_CAPACITY =  100 # centimetres
 MAIN_TOPIC = '/devices/'
 
 
-
-
 def create_device_and_loop(dev, num):
-    device = Device(dev, BATTERY_TIME, MESSAGE_TIME, num)
+    config_file = create_config(dev, num, BATTERY_TIME, MESSAGE_TIME, BIN_CAPACITY)
+    device = Device(config_file)
     device.start()
+
+
+def create_config(dev,num,BATTERY_TIME, MESSAGE_TIME, BIN_CAPACITY):
+    CONFIGURATION["device_id"] = dev
+    CONFIGURATION["num"] = num
+    CONFIGURATION["message_time"] = MESSAGE_TIME
+    CONFIGURATION["battery_time"] = BATTERY_TIME
+    CONFIGURATION["bin_capacity"] = BIN_CAPACITY
+
+    name = dev+".json"
+    with open(name, "w") as f:
+        json.dump(CONFIGURATION, f)
+    
+    return name
 
 
 def on_connect(client, userdata, flags, rc):
