@@ -51,7 +51,8 @@ def register(dev_data_list):
                     }
                 ],
                 "metadata": {
-                    "keyyy": "valll"
+                    "long": dev['long'],
+                    "lat": dev['lat']
                 }
             }
         devs_to_ret.append(client.create_device(request={"parent": parent, "device": device_template}))
@@ -95,12 +96,68 @@ def get_dev(devid):
     return device
 
 
+
+
+
+
+
+
+
+
+
+
+
 devs_data = [
     {
-        "id": "dev1",
-        "long": "45.555",
-        "lat": "333.444"
-    }
+        "id": "smart-bin-1",
+        "lat": "50.059215167684435",
+        "long": "19.938240760722554"
+    },
+    {
+        "id": "smart-bin-2",
+        "lat": "50.059779969290204", 
+        "long": "19.94242500699472"
+    },
+    {
+        "id": "smart-bin-3",
+        "lat": "50.06629501635049", 
+        "long": "19.939762027346998"
+    },
+    {
+        "id": "smart-bin-4",
+        "lat": "50.06519306679963", 
+        "long": "19.951080949060767"
+    },
+    {
+        "id": "smart-bin-5",
+        "lat": "50.068464283479756", 
+        "long": "19.952679545724695"
+    },
+    {
+        "id": "smart-bin-6",
+        "lat": "50.0676485127072", 
+        "long": "19.91723601190027"
+    },
+    {
+        "id": "smart-bin-7",
+        "lat": "50.069948600070326", 
+        "long": "19.90546647887831"
+    },
+    {
+        "id": "smart-bin-8",
+        "lat": "50.06298441031591",
+        "long": "19.90339602647755"
+    },
+    {
+        "id": "smart-bin-9",
+        "lat": "50.06965087655583", 
+        "long": "19.925862209204546"
+    },
+    {
+        "id": "smart-bin-10",
+        "long": "50.05888454902623",
+        "lat": "19.93300508892388"
+    },
 ]
-# register(devs_data)
-get_dev("dev2")
+register(devs_data)
+# get_dev("dev2")

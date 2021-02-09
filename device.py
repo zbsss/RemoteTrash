@@ -13,7 +13,7 @@ import datetime
 
 
 class Device:
-    def __init__(self, config_file):
+    def __init__(self, config_file, dev):
         """
         :param config_file: name of json file with configuration
         """
@@ -22,7 +22,7 @@ class Device:
         with open(config_file) as f:
             self.conf = json.load(f)
 
-        self.conf['private_key_file'] = self.conf['private_key_file'] + str(self.conf['num']) + ".pem"
+        self.conf['private_key_file'] = "rsa_private_{}.pem".format(dev)
         
         # seconds to milliseconds 1 second = 1000 ms
         self.send_message_time = self.conf['message_time'] * 1000

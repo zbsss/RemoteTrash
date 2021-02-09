@@ -7,14 +7,14 @@ CONFIGURATION = {
     "project_id" : "tirprojekt",
     "cloud_region" : "europe-west1",
     "registry_id" : "smartbins",
-    "private_key_file" : "rsa_private",
+    "private_key_file" : "rsa_private_",
     "algorithm" : "RS256",
     "ca_certs" : "roots.pem",
     "mqtt_bridge_hostname" : "mqtt.googleapis.com",
     "mqtt_bridge_port" : 8883,
 }
 
-DEVICE_NUM = 4
+DEVICE_NUM = 11
 BROKER = ("34.70.234.204", 1883, 60)  # host, port, keepalive
 REAL_BATTERY_TIME = 38 # in days x2, because battery time is updated when measurement is being done
 REAL_MESSAGE_TIME = 3600*24 # 24h in s
@@ -26,7 +26,7 @@ MAIN_TOPIC = '/devices/'
 
 def create_device_and_loop(dev, num):
     config_file = create_config(dev, num, BATTERY_TIME, MESSAGE_TIME, BIN_CAPACITY)
-    device = Device(config_file)
+    device = Device(config_file, dev)
     device.start()
 
 
