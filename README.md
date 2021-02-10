@@ -67,11 +67,15 @@ As long as the device's battery is not discharged the device gets the bin fillin
 The actual device should retrieve information about the level of filling the bin from the HCSR04 sensor. We have mocked library used to operate the sensor, so that the bin will be filling up with the given speed.  
 We have also mocked some of *machine* library functions used to operate microcontroller.
 
-The device sends to the cloud a json file with its id, fill level, battery condition and date with time.  
-
 The simulation is run from the file *simulation.py*, where the devices programs are started in separate threads.
 
-  
+### Cloud Computing
+
+To handle data processing and managing of IOT devices we chose Google Cloud services. *IOT Core* service is responsible for registering devices, receiving data and uploading configuration to devices. Telemetry data gathered from smart bins are passed to *Big Query* via *Dataflow* and then they are ready to be processed with Big Data/AI tools available on Google Cloud. Data are transferred with MQTT protocol secured with TLS and RSA algorithm. Devices are configured to send: battery level, bin fulfillment, device ID and timestamp of a measurement - all packed up into JSON.
+
+We also prepared a simple script to bulk register many devices. We only have to pass device list as an argument and script will do all job for us, this includes key generation and sending proper metadata to IOT Core.
+
+
      
 <br>
 <br>
