@@ -47,3 +47,22 @@ Assumptions:
 3. To get 5V and 3.3V power supply we assumed that these regulators would be used: [first](https://pl.mouser.com/ProductDetail/Microchip-Technology/TC1262-33VDB?qs=Jw2w9zrI6w%252BwE14QJIhJFA%3D%3D&mgh=1&vip=1&gclid=CjwKCAiAi_D_BRApEiwASslbJ7H0cJQEGvKTFvMWM9Xh1R2UAsh5fmZcAWQEGv_KjgUsXIbnqQwQMRoCIS4QAvD_BwE), [second](https://pl.farnell.com/microchip/mcp1703-5002e-db/ic-ldo-reg-250ma-5v-sot223/dp/1627178?gclid=CjwKCAiAxeX_BRASEiwAc1Qdkcw7YHGdpOyY8fNJVOAq-gmqQjOPL75oksJOoKkmFiZcXzzSWzI_ghoCSPIQAvD_BwE&gross_price=true&mckv=sCMYRj03j_dc|pcrid|459816541173|plid||kword||match||slid||product|1627178|pgrid|114468574784|ptaid|pla-303417735835|&CMP=KNC-GPL-SHOPPING-Whoop-HI-31-Aug-20).
 
 With these assumptions our device's working time would be about 19 days 9 h and 30 min.
+
+#  
+
+### Code description
+
+The main program of the device is in file *device.py*.  
+To create an object of the Device class, the device configuration should be passed as a parameter. The device configuration should contain the information needed to connect using mqtt and information about a bin like: bin id, capacity and time between two sent messages (*message_time*). 
+
+As long as the device's battery is not discharged the device gets the bin filling, updates the battery usage, sends information to the cloud and falls into a *sleep* for a specified period of time (*message time*). The device uses less energy while *sleeping*.   
+
+The actual device should retrieve information about the level of filling the bin from the HCSR04 sensor. We have mocked library used to operate the sensor, so that the bin will be filling up with the given speed.  
+We have also mocked some of *machine* library functions used to operate microcontroller.
+
+The device sends to the cloud a json file with its id, fill level, battery condition and date with time.  
+
+The simulation is run from the file *simulation.py*, where the devices programs are started in separate threads.
+
+
+
