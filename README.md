@@ -1,6 +1,12 @@
 # Remote Trash
 
-### A project prepared for IoT laboratories at AGH University of Science and Technology.
+### A project prepared for IoT laboratories at AGH University of Science and Technology.  
+
+Developed by:  
+ - Michał Kurleto [zbsss](https://github.com/zbsss)
+ - Karol Hamielec [lewelyn7](https://github.com/lewelyn7)
+ - Magdalena Pastuła [Sharon131](https://github.com/Sharon131)
+ - Natalia Brzozowska [brzozia](https://github.com/brzozia)
 
 
 The subject of the project was to create a system that implements smart monitoring.
