@@ -78,6 +78,10 @@ We also prepared a simple script to bulk register many devices. We only have to 
 ### Visualization
 
 The visualization is run as a seperate script *visualization.py*. Data is queried from *Big Query* every 10 seconds and for each device only the entry with the newest timestamp is displayed.
+To run the script you need to supply a path to a file with your Google Could credentials. This can be done by running the following command:
+```
+export GOOGLE_APPLICATION_CREDENTIALS="path to your credentials"
+```
 
      
 <br>
