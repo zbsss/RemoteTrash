@@ -75,6 +75,9 @@ To handle data processing and managing of IOT devices we chose Google Cloud serv
 
 We also prepared a simple script to bulk register many devices. We only have to pass device list as an argument and script will do all job for us, this includes key generation and sending proper metadata to IOT Core.
 
+### Visualization
+
+The visualization is run as a seperate script *visualization.py*. Data is queried from *Big Query* every 10 seconds and for each device only the entry with the newest timestamp is displayed.
 
      
 <br>
